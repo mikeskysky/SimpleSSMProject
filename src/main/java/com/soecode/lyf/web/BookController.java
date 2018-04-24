@@ -40,7 +40,6 @@ public class BookController {
 	@RequestMapping(value = "/mytest", method = RequestMethod.GET)
 	@ResponseBody
 	private String mytest(Model model) {
-		System.out.println(systemPropertie.getMfSmsSuccessContent());
 		return "code";
 	}
 	
@@ -71,7 +70,7 @@ public class BookController {
 	@ResponseBody
 	private Result<AppointExecution> appoint(@PathVariable("bookId") Long bookId, @RequestParam("studentId") Long studentId) {
 		if (studentId == null || studentId.equals("")) {
-			return new Result<>(false, "学号不能为空");
+			return new Result<AppointExecution>(false, "学号不能为空");
 		}
 		AppointExecution execution = null;
 		try {

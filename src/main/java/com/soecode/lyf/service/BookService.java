@@ -34,4 +34,6 @@ public interface BookService {
 	 */
 	AppointExecution appoint(long bookId, long studentId);
 
+	void addBook();
+
 }

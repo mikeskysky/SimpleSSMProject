@@ -35,4 +35,15 @@
 			book_id = #{bookId}
 		AND number > 0
 	</update>
+	<select id="queryByName" parameterType="Book" resultType="Book">
+		SELECT
+			book_id,
+			name,
+			number
+		FROM
+			book where name=#{value}
+	</select>
+	<insert id="addBook" parameterType="Book">
+		insert into book(book_id,name,number) values(#{bookId},#{name},#{number})
+	</insert>
 </mapper>

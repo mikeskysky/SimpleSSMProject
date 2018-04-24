@@ -11,7 +11,8 @@ import com.soecode.lyf.entity.SystemPropertie;
 @Service("sendSmsUtil")
 public class SendSmsUtil 
 {
-	private static SystemPropertie systemPropertie;
+	@Autowired
+	private SystemPropertie systemPropertie;
 	
 	private static String successTemplate;
 	
@@ -32,14 +33,6 @@ public class SendSmsUtil
 		return buildResult;
 	}
 
-	public SystemPropertie getSystemPropertie() {
-		return systemPropertie;
-	}
-	
-	@Autowired
-	public void setSystemPropertie(SystemPropertie systemPropertie) {
-		SendSmsUtil.systemPropertie = systemPropertie;
-	}
 	/*
 	 * @PostContruct是spring框架的注解，
 	 * 在方法上加该注解会在项目启动的时候执行该方法，

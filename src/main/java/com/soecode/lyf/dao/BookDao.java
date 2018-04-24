@@ -34,4 +34,9 @@ public interface BookDao {
 	 */
 	int reduceNumber(long bookId);
 
+	Book queryByName(String string);
+
+	
+	int addBook(Book book);
+
 }

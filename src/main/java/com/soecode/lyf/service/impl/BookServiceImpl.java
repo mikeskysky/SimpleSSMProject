@@ -1,6 +1,8 @@
 package com.soecode.lyf.service.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import com.soecode.lyf.service.BookService;
 public class BookServiceImpl implements BookService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Map<String,String> map=new ConcurrentHashMap<String,String>();
 
 	// 注入Service依赖
 	@Autowired
@@ -75,5 +78,38 @@ public class BookServiceImpl implements BookService {
 			throw new AppointException("appoint inner error:" + e.getMessage());
 		}
 	}
+
+	@Override
+	public void addBook() {
+		Book book=new Book(2,"test2",10);
+		String name="test2";
+		if(!isInCache(name)){ 
+	           if(!isInDB(name)){ 
+	        	   bookDao.addBook(book);
+	               //移除map中的key 
+	               synchronized (map) 
+	            { 
+	                map.remove(name); 
+	            } 
+	           } 
+	       } 
+	}
+	
+	private boolean isInDB(String name) {
+		Book selectBook=bookDao.queryByName("test2");
+		return selectBook!=null?true:false;
+	}
+
+	private boolean isInCache(String username){ 
+        synchronized (map) 
+        { 
+            if(map.containsKey(username)){ 
+                return true; 
+            }else{ 
+                map.put(username, username); 
+            } 
+        } 
+       return false; 
+    } 
 
 }
